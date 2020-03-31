@@ -3,6 +3,7 @@ package com.eebros.daggertutorial
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.eebros.daggertutorial.di.ViewModelProviderFactory
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {

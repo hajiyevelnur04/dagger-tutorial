@@ -1,7 +1,10 @@
-package com.eebros.daggertutorial
+package com.eebros.daggertutorial.di
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
+import com.eebros.daggertutorial.di.module.ActivityBuildersModule
+import com.eebros.daggertutorial.di.module.AppModule
+import com.eebros.daggertutorial.di.module.ViewModelFactoryModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector

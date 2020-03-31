@@ -1,6 +1,5 @@
-package com.eebros.daggertutorial
+package com.eebros.daggertutorial.repository
 
-import android.content.Context
 import javax.inject.Inject
 
 interface MainRepositoryType{

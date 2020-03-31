@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial
+package com.eebros.daggertutorial.di.scope
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

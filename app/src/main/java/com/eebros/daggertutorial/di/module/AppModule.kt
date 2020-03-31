@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial
+package com.eebros.daggertutorial.di.module
 
 import android.app.Application
 import android.content.Context

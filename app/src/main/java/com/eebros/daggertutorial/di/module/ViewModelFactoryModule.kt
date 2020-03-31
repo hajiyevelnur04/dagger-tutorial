@@ -1,6 +1,7 @@
-package com.eebros.daggertutorial
+package com.eebros.daggertutorial.di.module
 
 import androidx.lifecycle.ViewModelProvider
+import com.eebros.daggertutorial.di.ViewModelProviderFactory
 import dagger.Binds
 import dagger.Module
 

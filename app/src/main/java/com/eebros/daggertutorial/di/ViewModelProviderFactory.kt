@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial
+package com.eebros.daggertutorial.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
