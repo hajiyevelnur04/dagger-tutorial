@@ -1,7 +1,7 @@
 package com.eebros.daggertutorial.di
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatActivity
+import com.eebros.daggertutorial.base.BaseApplication
 import com.eebros.daggertutorial.di.module.ActivityBuildersModule
 import com.eebros.daggertutorial.di.module.AppModule
 import com.eebros.daggertutorial.di.module.ViewModelFactoryModule
@@ -20,7 +20,7 @@ import javax.inject.Singleton
         ViewModelFactoryModule::class
     ]
 )
-interface AppComponent : AndroidInjector<AppCompatActivity> {
+interface AppComponent : AndroidInjector<BaseApplication> {
 
     @Component.Builder
     interface Builder {

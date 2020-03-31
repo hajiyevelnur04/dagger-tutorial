@@ -3,7 +3,7 @@ package com.eebros.daggertutorial.di.module
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
-import androidx.appcompat.app.AppCompatActivity
+import com.eebros.daggertutorial.base.BaseActivity
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -17,9 +17,9 @@ class AppModule {
     fun provideResources(app: Application): Resources = app.resources
 
     @Provides
-    fun provideActivity(): AppCompatActivity = AppCompatActivity()
+    fun provideActivity(): BaseActivity = BaseActivity()
 
     @Provides
     @Reusable
-    fun provideSharedPreferences(context: Context)= context.getSharedPreferences("some test", Context.MODE_PRIVATE)
+    fun provideSharedPreferences(context: Context)= context.getSharedPreferences("some_test", Context.MODE_PRIVATE)
 }
