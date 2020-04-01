@@ -4,6 +4,7 @@ import android.app.Application
 import com.eebros.daggertutorial.base.BaseApplication
 import com.eebros.daggertutorial.di.module.ActivityBuildersModule
 import com.eebros.daggertutorial.di.module.AppModule
+import com.eebros.daggertutorial.di.module.NetworkModule
 import com.eebros.daggertutorial.di.module.ViewModelFactoryModule
 import dagger.BindsInstance
 import dagger.Component
@@ -17,7 +18,8 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ActivityBuildersModule::class,
         AppModule::class,
-        ViewModelFactoryModule::class
+        ViewModelFactoryModule::class,
+        NetworkModule::class
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {

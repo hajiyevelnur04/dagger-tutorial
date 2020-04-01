@@ -40,7 +40,7 @@ android {
             buildConfigField "String", "PEM_FILE_NAME", "\"somePem\""
         }
         debug {
-            buildConfigField "String", "BASIC_URL", "\"https://db.ygoprodeck.com/\""
+            buildConfigField "String", "BASIC_URL", "\"https://db.ygoprodeck.com/api/v5/\""
             buildConfigField "String", "PEM_FILE_NAME", "\"somePem\""
             minifyEnabled false
 

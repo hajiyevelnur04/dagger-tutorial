@@ -1,22 +1,20 @@
 package com.eebros.daggertutorial.repository
 
-import com.eebros.daggertutorial.remote.data.request.TestRequestModel
-import com.eebros.daggertutorial.remote.data.response.TestResponseModel
+import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
 import com.eebros.daggertutorial.remote.service.MainApiServiceProvider
-import io.reactivex.Single
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 interface MainRepositoryType{
-    fun test(token: String) : Single<TestResponseModel>
+    fun getAllCards() : PublishSubject<GetAllCardResponseModel>
 }
 
 class MainRepository @Inject constructor(
     private val serviceProvider: MainApiServiceProvider
 ) : MainRepositoryType {
 
-    override fun test(token: String): Single<TestResponseModel> {
-        val request =TestRequestModel("some text")
-        return serviceProvider.getInstance().someTest(request)
+    override fun getAllCards(): PublishSubject<GetAllCardResponseModel> {
+        return serviceProvider.getInstance().getAllCards()
     }
 
 }
