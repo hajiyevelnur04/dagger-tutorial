@@ -9,7 +9,7 @@ data class GetAllCardResponseModel (
     val archetype: String,
     val views: String,
     val formats: String,
-    val card_sets: CardSets,
-    val card_images: CardImages,
+    val card_sets: ArrayList<CardSets>,
+    val card_images: ArrayList<CardImages>,
     val card_prices: CardPrices
 )

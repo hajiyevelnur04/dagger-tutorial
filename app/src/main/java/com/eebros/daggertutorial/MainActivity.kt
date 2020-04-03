@@ -16,7 +16,7 @@ class MainActivity : BaseActivity() {
 
     private lateinit var viewModel: MainActivityViewModel
 
-    private val allCards = arrayListOf<GetAllCardResponseModel>()
+    private val allCards = arrayListOf<ArrayList<GetAllCardResponseModel>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +35,14 @@ class MainActivity : BaseActivity() {
 
     private fun setOutputListener() {
         viewModel.outputs.accountsSuccess().subscribe{
+            Log.d("server resOut:" , allCards.toString())
             allCards.add(it)
         }.addTo(subscriptions)
     }
 
     private fun setInputListener() {
         viewModel.inputs.getAllCards()
+        Log.d("server resInp:" , allCards.toString())
     }
 
 

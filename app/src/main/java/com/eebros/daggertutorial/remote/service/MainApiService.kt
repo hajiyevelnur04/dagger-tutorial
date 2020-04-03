@@ -1,9 +1,14 @@
 package com.eebros.daggertutorial.remote.service
 
+import com.eebros.daggertutorial.remote.Constants
 import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
 import com.eebros.daggertutorial.remote.provider.ServiceProvider
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import retrofit2.http.GET
+import retrofit2.http.Headers
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface MainApiService {
     /*@Headers(
@@ -14,7 +19,7 @@ interface MainApiService {
     )*/
     @GET("cardinfo.php")
     fun getAllCards(
-    ): PublishSubject<GetAllCardResponseModel>
+    ): Observable<ArrayList<GetAllCardResponseModel>>
 }
 
 interface MainApiServiceProvider : ServiceProvider<MainApiService>
