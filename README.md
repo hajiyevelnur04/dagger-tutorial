@@ -29,7 +29,7 @@
 `dagger-tutorial` is a tutorial to simplify process of using dagger with retrofit and other android sdk tools. Also, this tutorial demonstrates working skills either code writing or version controller(git)
 
 | mainfragment | progressDialog |
-| ----- | --- | ----- |
+| --- |--- |
 | ![](https://i.ibb.co/0sGkgjT/Screenshot-2020-04-04-20-02-49.png) | ![](https://i.ibb.co/nw4qF7T/Screenshot-2020-04-04-20-02-39.png) |
 
 ## Credit goes to
