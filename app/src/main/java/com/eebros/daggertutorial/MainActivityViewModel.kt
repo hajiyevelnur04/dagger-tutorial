@@ -17,6 +17,7 @@ interface MainActivityViewModelInputs: BaseViewModelInputs{
 
 interface MainActivityViewModelOutputs: BaseViewModelOutputs{
     fun accountsSuccess(): PublishSubject<ArrayList<GetAllCardResponseModel>>
+    fun showProgress(): PublishSubject<Boolean>
 }
 
 class MainActivityViewModel @Inject constructor(private val getAllCardUseCase: GetAllCardUseCase):
@@ -27,14 +28,19 @@ class MainActivityViewModel @Inject constructor(private val getAllCardUseCase: G
 
     private val accountsSuccess = PublishSubject.create<ArrayList<GetAllCardResponseModel>>()
 
+    private val showProgress = PublishSubject.create<Boolean>()
+
     override fun getAllCards() {
+        showProgress.onNext(true)
         getAllCardUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                showProgress.onNext(false)
                 accountsSuccess.onNext(it)
             },{
                 //some error int
+                showProgress.onNext(false)
                 error.onNext(1992)
                 it.printStackTrace()
             }).addTo(subscriptions)
@@ -42,4 +48,5 @@ class MainActivityViewModel @Inject constructor(private val getAllCardUseCase: G
 
     override fun accountsSuccess() = accountsSuccess
 
+    override fun showProgress() = showProgress
 }

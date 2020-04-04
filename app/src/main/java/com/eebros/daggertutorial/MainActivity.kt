@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import com.eebros.daggertutorial.decor.GridSpacingItemDecoration
 import com.eebros.daggertutorial.base.BaseActivity
 import com.eebros.daggertutorial.di.ViewModelProviderFactory
 import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
@@ -28,12 +29,13 @@ class MainActivity : BaseActivity() {
 
     private val allCards = arrayListOf<GetAllCardResponseModel>()
 
+    lateinit var dialog: CustomProgressDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //add this for some SVGs sources seem to not be fully supported
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        initView()
 
         //initialize view model with constructor
         viewModel = ViewModelProvider(this, factory)[MainActivityViewModel::class.java]
@@ -41,7 +43,13 @@ class MainActivity : BaseActivity() {
         val glm = GridLayoutManager(this, 2)
         //llm.orientation = LinearLayoutManager.VERTICAL
         cardContainer.layoutManager = glm
-        cardContainer.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
+        cardContainer.addItemDecoration(
+            GridSpacingItemDecoration(
+                2,
+                dpToPx(10),
+                true
+            )
+        )
         cardContainer.itemAnimator = DefaultItemAnimator()
 
         mainActivityAdapter = MainActivityAdapter(applicationContext,allCards){
@@ -55,11 +63,21 @@ class MainActivity : BaseActivity() {
 
     }
 
+    private fun initView() {
+        dialog = CustomProgressDialog(this)
+    }
+
     private fun setOutputListener() {
         viewModel.outputs.accountsSuccess().subscribe{
             allCards.clear()
             allCards.addAll(it)
             mainActivityAdapter.notifyDataSetChanged()
+        }.addTo(subscriptions)
+
+        viewModel.outputs.showProgress().subscribe{
+
+            if(it) dialog.showDialog() else dialog.hideDialog()
+
         }.addTo(subscriptions)
     }
 

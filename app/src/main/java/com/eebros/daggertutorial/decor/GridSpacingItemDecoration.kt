@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial
+package com.eebros.daggertutorial.decor
 
 import android.graphics.Rect
 import android.view.View
