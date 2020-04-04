@@ -4,6 +4,7 @@
 
 ## Table of Contents
 - [dagger-tutorial](#dagger-tutorial)
+  * [Kotlin](#Kotlin)
   * [Dagger2.16](#Dagger2.16)
     + [BaseApplication](#BaseApplication)
     + [BaseActivity](#BaseActivity)
@@ -13,30 +14,26 @@
     + [Scopes](#scopes)
     + [Activity-and-fragment-builder-Module](#Activity-and-fragment-builder-Module)
   * [RecyclerView](#RecyclerView)
+    + [Item-Onclick listener](#Item-Onclick listener)
   * [Cardview](#Cardview)
-  * [Network-request](#how-to-use)
+  * [ViewPager](#viewPager)
+  * [Tabs](#Cardview)
+  * [Network-request](#Network-request)
     + [retrofit](#retrofit)
     + [RxJava/RxKotlin](#rxjava-rxkotlin)
-      - [Basic Usage](#basic-usage)
-      - [Use with RxBinding](#use-with-rxbinding)
     + [okhttp](#okhttp)
-    + [reactive-objects](#reactive-objects)
+    + [progressDialog](#progressDialog)
   * [License](#license)
 
 ## Introducation
 `dagger-tutorial` is a tutorial to simplify process of using dagger with retrofit and other android sdk tools. Also, this tutorial demonstrates working skills either code writing or version controller(git)
 
-<div align="left" style="display:inline">
-<img width="200" height="450" src="https://i.ibb.co/FgQmy9N/Screenshot-2020-04-04-20-02-55.png">
-</div>
-
 <div align="center" style="display:inline">
-<img width="200" height="450" src="https://i.ibb.co/0sGkgjT/Screenshot-2020-04-04-20-02-49.png">
+<img width="200" height="450" align="left src="https://i.ibb.co/FgQmy9N/Screenshot-2020-04-04-20-02-55.png">
+<img width="200" height="450" align="center" src="https://i.ibb.co/0sGkgjT/Screenshot-2020-04-04-20-02-49.png">
+<img width="200" height="450" align="right" src="https://i.ibb.co/nw4qF7T/Screenshot-2020-04-04-20-02-39.png">
 </div>
 
-<div align="right" style="display:inline">
-<img width="200" height="450" src="https://i.ibb.co/nw4qF7T/Screenshot-2020-04-04-20-02-39.png">
-</div>
 
 ## Credit goes to
 https://db.ygoprodeck.com/api/v6/cardinfo.php - team
