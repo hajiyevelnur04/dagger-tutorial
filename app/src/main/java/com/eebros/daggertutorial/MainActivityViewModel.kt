@@ -28,13 +28,11 @@ class MainActivityViewModel @Inject constructor(private val getAllCardUseCase: G
     private val accountsSuccess = PublishSubject.create<ArrayList<GetAllCardResponseModel>>()
 
     override fun getAllCards() {
-        var test :String = ""
         getAllCardUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 accountsSuccess.onNext(it)
-                test = it[0].archetype
             },{
                 //some error int
                 error.onNext(1992)
