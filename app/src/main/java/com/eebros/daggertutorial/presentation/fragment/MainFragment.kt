@@ -2,6 +2,7 @@ package com.eebros.daggertutorial.presentation.fragment
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ import com.eebros.daggertutorial.R
 import com.eebros.daggertutorial.base.BaseFragment
 import com.eebros.daggertutorial.decor.GridSpacingItemDecoration
 import com.eebros.daggertutorial.di.ViewModelProviderFactory
+import com.eebros.daggertutorial.presentation.activity.SelectedCardActivity
 import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
 import com.eebros.daggertutorial.view.CustomProgressDialog
 import io.reactivex.rxkotlin.addTo
@@ -73,7 +75,19 @@ class MainFragment : BaseFragment() {
                 requireContext(),
                 allCards
             ) {
-                Toast.makeText(requireContext(), "$it position", Toast.LENGTH_LONG).show()
+                var intent = Intent(requireActivity(), SelectedCardActivity::class.java)
+                intent.putExtra("name", allCards[it].name)
+                intent.putExtra("desc", allCards[it].desc)
+                intent.putExtra("name", allCards[it].type)
+                intent.putExtra("image",allCards[it].card_images[0].image_url)
+                intent.putExtra("race", allCards[it].race)
+                intent.putExtra("archetype", allCards[it].archetype)
+                intent.putExtra("id", allCards[it].id)
+                intent.putExtra("setName", allCards[it].card_sets[0].set_name)
+                intent.putExtra("setCode", allCards[it].card_sets[0].set_code)
+                intent.putExtra("setPrice", allCards[it].card_sets[0].set_price)
+                startActivity(intent)
+
             }
         cardContainer.adapter = mainFragmentAdapter
 
@@ -94,7 +108,7 @@ class MainFragment : BaseFragment() {
         viewModel.outputs.accountsSuccess().subscribe{
             allCards.clear()
             allCards.addAll(it)
-            mainFragmentAdapter.notifyDataSetChanged()
+            cardContainer.adapter?.notifyDataSetChanged()
         }.addTo(subscriptions)
 
         viewModel.outputs.showProgress().subscribe{

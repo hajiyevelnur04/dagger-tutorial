@@ -2,4 +2,13 @@
     <string name="app_name">dagger tutorial</string>
     <string name="first_tab">Main</string>
     <string name="second_tab">Test</string>
+    <string name="name">NAME</string>
+    <string name="desc">DESC</string>
+    <string name="type">TYPE</string>
+    <string name="selected">SelectedView</string>
+    <string name="race">RACE</string>
+    <string name="archetype">ARCHETYPE</string>
+    <string name="set_name">SET_NAME</string>
+    <string name="set_code">SET_CODE</string>
+    <string name="set_price">SET_PRICE</string>
 </resources>
