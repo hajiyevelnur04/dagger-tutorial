@@ -32,7 +32,7 @@
                 android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="256dp"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
@@ -42,12 +42,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:background="@color/cardBackground"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/name"/>
 
                 <TextView
+                    android:layout_marginStart="8dp"
+                    android:background="@color/cardBackground"
                     android:gravity="end"
                     android:id="@+id/nameT"
                     android:layout_width="0dp"
@@ -64,12 +67,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:background="@color/cardBackground"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/desc"/>
 
                 <TextView
+                    android:layout_marginStart="8dp"
+                    android:background="@color/cardBackground"
                     android:gravity="end"
                     android:id="@+id/descT"
                     android:layout_width="0dp"
@@ -86,13 +92,16 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:background="@color/cardBackground"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/type"/>
 
                 <TextView
+                    android:layout_marginStart="8dp"
                     android:gravity="end"
+                    android:background="@color/cardBackground"
                     android:id="@+id/typeT"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -108,12 +117,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:background="@color/cardBackground"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/race"/>
 
                 <TextView
+                    android:layout_marginStart="8dp"
+                    android:background="@color/cardBackground"
                     android:gravity="end"
                     android:id="@+id/raceT"
                     android:layout_width="0dp"
@@ -130,12 +142,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:background="@color/cardBackground"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/archetype"/>
 
                 <TextView
+                    android:layout_marginStart="8dp"
+                    android:background="@color/cardBackground"
                     android:gravity="end"
                     android:id="@+id/archetypeT"
                     android:layout_width="0dp"
@@ -152,12 +167,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:background="@color/cardBackground"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/set_name"/>
 
                 <TextView
+                    android:layout_marginStart="8dp"
+                    android:background="@color/cardBackground"
                     android:gravity="end"
                     android:id="@+id/setNameT"
                     android:layout_width="0dp"
@@ -174,12 +192,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:background="@color/cardBackground"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/set_code"/>
 
                 <TextView
+                    android:layout_marginStart="8dp"
+                    android:background="@color/cardBackground"
                     android:gravity="end"
                     android:id="@+id/setCodeT"
                     android:layout_width="0dp"
@@ -190,18 +211,22 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginBottom="32dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:background="@color/cardBackground"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/set_price"/>
 
                 <TextView
+                    android:layout_marginStart="8dp"
+                    android:background="@color/cardBackground"
                     android:gravity="end"
                     android:id="@+id/setPriceT"
                     android:layout_width="0dp"
@@ -214,9 +239,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
