@@ -54,8 +54,9 @@ ext {
     daggerVersion = '2.16'
     retrofitVersion = '2.6.2'
     cardViewVersion = '1.0.0'
-    recyclerViewVersion = '3.0.0'
     glideVerison = '4.11.0'
+    rxBindingVersion = '3.0.0'
+
 }
 
 dependencies {
@@ -86,7 +87,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
 
     //data binding
-    implementation "com.jakewharton.rxbinding3:rxbinding-recyclerview:$recyclerViewVersion"
+    implementation "com.jakewharton.rxbinding3:rxbinding-recyclerview:$rxBindingVersion"
+    implementation "com.jakewharton.rxbinding3:rxbinding-material:$rxBindingVersion"
+    implementation "com.jakewharton.rxbinding3:rxbinding-viewpager:$rxBindingVersion"
 
     //cardview
     implementation "androidx.cardview:cardview:$cardViewVersion"
@@ -94,4 +97,7 @@ dependencies {
     //glide
     implementation "com.github.bumptech.glide:glide:$glideVerison"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVerison"
+
+    //material theme
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
 }

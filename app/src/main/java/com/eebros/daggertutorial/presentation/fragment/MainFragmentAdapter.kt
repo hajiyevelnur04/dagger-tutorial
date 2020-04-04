@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial
+package com.eebros.daggertutorial.presentation.fragment
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.eebros.daggertutorial.R
 import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
 import kotlinx.android.synthetic.main.cards_list_view.view.*
 
-class MainActivityAdapter(private val context:Context,
+class MainFragmentAdapter(private val context:Context,
                           private val getAllCards: ArrayList<GetAllCardResponseModel>,
                           private val onCLickListener: (position:Int) -> Unit
-) : RecyclerView.Adapter<MainActivityAdapter.MainViewHolder>(){
+) : RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>(){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -25,7 +26,13 @@ class MainActivityAdapter(private val context:Context,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-        return MainViewHolder(inflater.inflate(R.layout.cards_list_view, parent, false))
+        return MainViewHolder(
+            inflater.inflate(
+                R.layout.cards_list_view,
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount() = getAllCards.size

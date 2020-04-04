@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial
+package com.eebros.daggertutorial.view
 
 import android.app.Activity
 import android.app.Dialog
@@ -7,6 +7,7 @@ import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.ImageView
+import com.eebros.daggertutorial.R
 
 class CustomProgressDialog(private val activity: Activity) {
 

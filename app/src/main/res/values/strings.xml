@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">dagger tutorial</string>
+    <string name="first_tab">Main</string>
+    <string name="second_tab">Test</string>
 </resources>
