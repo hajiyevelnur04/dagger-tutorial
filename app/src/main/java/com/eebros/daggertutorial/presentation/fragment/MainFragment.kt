@@ -26,7 +26,7 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
-class MainFragment : BaseFragment() {
+class MainFragment : BaseFragment(), MainFragmentAdapter.MainFragmentAdapterListener {
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
@@ -73,22 +73,12 @@ class MainFragment : BaseFragment() {
         mainFragmentAdapter =
             MainFragmentAdapter(
                 requireContext(),
-                allCards
-            ) {
-                var intent = Intent(requireActivity(), SelectedCardActivity::class.java)
-                intent.putExtra("name", allCards[it].name)
-                intent.putExtra("desc", allCards[it].desc)
-                intent.putExtra("name", allCards[it].type)
-                intent.putExtra("image",allCards[it].card_images[0].image_url)
-                intent.putExtra("race", allCards[it].race)
-                intent.putExtra("archetype", allCards[it].archetype)
-                intent.putExtra("id", allCards[it].id)
-                intent.putExtra("setName", allCards[it].card_sets[0].set_name)
-                intent.putExtra("setCode", allCards[it].card_sets[0].set_code)
-                intent.putExtra("setPrice", allCards[it].card_sets[0].set_price)
-                startActivity(intent)
+                allCards,
+                {
 
-            }
+                },
+                this
+            )
         cardContainer.adapter = mainFragmentAdapter
 
         //this helps to invoke and send data to and from viewModel
@@ -155,5 +145,20 @@ class MainFragment : BaseFragment() {
                 return true
             }
         })
+    }
+
+    override fun getCardInfo(getAllCardResponseModel: GetAllCardResponseModel) {
+        var intent = Intent(requireActivity(), SelectedCardActivity::class.java)
+        intent.putExtra("name", getAllCardResponseModel.name)
+        intent.putExtra("desc", getAllCardResponseModel.desc)
+        intent.putExtra("name", getAllCardResponseModel.type)
+        intent.putExtra("image",getAllCardResponseModel.card_images[0].image_url)
+        intent.putExtra("race", getAllCardResponseModel.race)
+        intent.putExtra("archetype", getAllCardResponseModel.archetype)
+        intent.putExtra("id", getAllCardResponseModel.id)
+        intent.putExtra("setName", getAllCardResponseModel.card_sets[0].set_name)
+        intent.putExtra("setCode", getAllCardResponseModel.card_sets[0].set_code)
+        intent.putExtra("setPrice", getAllCardResponseModel.card_sets[0].set_price)
+        startActivity(intent)
     }
 }

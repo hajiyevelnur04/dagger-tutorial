@@ -1,6 +1,5 @@
 package com.eebros.daggertutorial.presentation.fragment
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -14,9 +13,12 @@ import com.eebros.daggertutorial.R
 import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
 import kotlinx.android.synthetic.main.cards_list_view.view.*
 
-class MainFragmentAdapter(private val context:Context,
-                          private val getAllCards: ArrayList<GetAllCardResponseModel>,
-                          private val onCLickListener: (position:Int) -> Unit
+
+class MainFragmentAdapter(
+    private val context: Context,
+    private val getAllCards: ArrayList<GetAllCardResponseModel>,
+    private val onCLickListener: (position: Int) -> Unit,
+    private val listener: MainFragmentAdapterListener
 ) : RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>(), Filterable {
 
     private var filteredCardList = getAllCards
@@ -24,10 +26,12 @@ class MainFragmentAdapter(private val context:Context,
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     class MainViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bind(getAllCardResponseModel: GetAllCardResponseModel, context: Context, clickListeners: (position: Int) -> Unit){
+        fun bind(getAllCardResponseModel: GetAllCardResponseModel, context: Context, listener: MainFragmentAdapterListener, clickListeners: (position: Int) -> Unit){
             itemView.iconText.text = getAllCardResponseModel.name
             Glide.with(context).load(getAllCardResponseModel.card_images[0].image_url).into(itemView.icon);
-            itemView.setOnClickListener { clickListeners.invoke(adapterPosition) }
+            itemView.setOnClickListener {
+                listener.getCardInfo(getAllCardResponseModel)
+                clickListeners.invoke(adapterPosition) }
         }
     }
 
@@ -44,7 +48,7 @@ class MainFragmentAdapter(private val context:Context,
     override fun getItemCount() = filteredCardList.size
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind(filteredCardList[position], context, onCLickListener)
+        holder.bind(filteredCardList[position], context, listener, onCLickListener)
     }
 
     override fun getFilter(): Filter? {
@@ -77,4 +81,9 @@ class MainFragmentAdapter(private val context:Context,
             }
         }
     }
+
+    open interface MainFragmentAdapterListener{
+        fun getCardInfo(getAllCardResponseModel: GetAllCardResponseModel)
+    }
+
 }
