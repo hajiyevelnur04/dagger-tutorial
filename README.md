@@ -14,7 +14,7 @@
     + [Scopes](#scopes)
     + [Activity-and-fragment-builder-Module](#Activity-and-fragment-builder-Module)
   * [RecyclerView](#RecyclerView)
-    + [Item-Onclick listener](#Item-Onclick listener)
+    + [Item-Onclick-listener](#Item-Onclick-listener)
   * [Cardview](#Cardview)
   * [ViewPager](#viewPager)
   * [Tabs](#Cardview)
@@ -28,12 +28,9 @@
 ## Introducation
 `dagger-tutorial` is a tutorial to simplify process of using dagger with retrofit and other android sdk tools. Also, this tutorial demonstrates working skills either code writing or version controller(git)
 
-<div align="center" style="display:inline">
-<img width="200" height="450" align="left src="https://i.ibb.co/FgQmy9N/Screenshot-2020-04-04-20-02-55.png">
-<img width="200" height="450" align="center" src="https://i.ibb.co/0sGkgjT/Screenshot-2020-04-04-20-02-49.png">
-<img width="200" height="450" align="right" src="https://i.ibb.co/nw4qF7T/Screenshot-2020-04-04-20-02-39.png">
-</div>
-
+| mainfragment | progressDialog | testfragment |
+| --- | --- | --- |
+| ![](https://i.ibb.co/FgQmy9N/Screenshot-2020-04-04-20-02-55.png) | ![](https://i.ibb.co/0sGkgjT/Screenshot-2020-04-04-20-02-49.png) | ![](https://i.ibb.co/nw4qF7T/Screenshot-2020-04-04-20-02-39.png) |
 
 ## Credit goes to
 https://db.ygoprodeck.com/api/v6/cardinfo.php - team
