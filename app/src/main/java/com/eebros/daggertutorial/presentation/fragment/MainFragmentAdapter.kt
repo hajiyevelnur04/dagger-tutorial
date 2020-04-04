@@ -1,9 +1,13 @@
 package com.eebros.daggertutorial.presentation.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.eebros.daggertutorial.R
@@ -13,7 +17,9 @@ import kotlinx.android.synthetic.main.cards_list_view.view.*
 class MainFragmentAdapter(private val context:Context,
                           private val getAllCards: ArrayList<GetAllCardResponseModel>,
                           private val onCLickListener: (position:Int) -> Unit
-) : RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>(){
+) : RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>(), Filterable {
+
+    private var filteredCardList = getAllCards
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -35,9 +41,40 @@ class MainFragmentAdapter(private val context:Context,
         )
     }
 
-    override fun getItemCount() = getAllCards.size
+    override fun getItemCount() = filteredCardList.size
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind(getAllCards[position], context, onCLickListener)
+        holder.bind(filteredCardList[position], context, onCLickListener)
+    }
+
+    override fun getFilter(): Filter? {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val filterResult = arrayListOf<GetAllCardResponseModel>()
+                if(TextUtils.isEmpty(charSequence) || charSequence.trim().isEmpty()){
+                    filterResult.addAll(getAllCards)
+                } else {
+                    val searchText = charSequence.toString().toLowerCase().trim()
+
+                    getAllCards.forEach {
+                        if (it.name.toLowerCase().contains(searchText)){
+                            filterResult.add(it)
+                        }
+                    }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = filterResult
+                return filterResults
+            }
+
+            override fun publishResults(
+                charSequence: CharSequence,
+                filterResults: FilterResults
+            ) {
+                filteredCardList = filterResults.values as ArrayList<GetAllCardResponseModel>
+                // refresh the list with filtered data
+                notifyDataSetChanged()
+            }
+        }
     }
 }

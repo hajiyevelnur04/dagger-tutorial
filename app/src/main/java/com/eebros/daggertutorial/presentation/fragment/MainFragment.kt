@@ -1,25 +1,25 @@
 package com.eebros.daggertutorial.presentation.fragment
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.eebros.daggertutorial.view.CustomProgressDialog
 import com.eebros.daggertutorial.R
-import com.eebros.daggertutorial.decor.GridSpacingItemDecoration
 import com.eebros.daggertutorial.base.BaseFragment
+import com.eebros.daggertutorial.decor.GridSpacingItemDecoration
 import com.eebros.daggertutorial.di.ViewModelProviderFactory
 import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
+import com.eebros.daggertutorial.view.CustomProgressDialog
 import io.reactivex.rxkotlin.addTo
-import kotlinx.android.synthetic.main.fragment_main.*
-
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -38,6 +38,11 @@ class MainFragment : BaseFragment() {
     lateinit var dialog: CustomProgressDialog
 
     lateinit var cardContainer: RecyclerView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -112,4 +117,29 @@ class MainFragment : BaseFragment() {
         ).roundToInt()
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        val searchManager =
+            requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+        searchView.maxWidth = Integer.MAX_VALUE
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("query:" , query)
+                mainFragmentAdapter.filter?.filter(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d("newText:" , newText)
+                mainFragmentAdapter.filter?.filter(newText)
+                return true
+            }
+        })
+    }
 }
