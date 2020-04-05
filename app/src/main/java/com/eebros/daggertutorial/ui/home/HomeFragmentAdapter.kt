@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial.presentation.fragment
+package com.eebros.daggertutorial.ui.home
 
 import android.content.Context
 import android.text.TextUtils
@@ -14,12 +14,12 @@ import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
 import kotlinx.android.synthetic.main.cards_list_view.view.*
 
 
-class MainFragmentAdapter(
+class HomeFragmentAdapter(
     private val context: Context,
     private val getAllCards: ArrayList<GetAllCardResponseModel>,
     private val onCLickListener: (position: Int) -> Unit,
     private val listener: MainFragmentAdapterListener
-) : RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>(), Filterable {
+) : RecyclerView.Adapter<HomeFragmentAdapter.MainViewHolder>(), Filterable {
 
     private var filteredCardList = getAllCards
 

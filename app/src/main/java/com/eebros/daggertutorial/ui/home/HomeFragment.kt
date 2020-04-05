@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial.presentation.fragment
+package com.eebros.daggertutorial.ui.home
 
 import android.app.SearchManager
 import android.content.Context
@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -18,7 +17,6 @@ import com.eebros.daggertutorial.R
 import com.eebros.daggertutorial.base.BaseFragment
 import com.eebros.daggertutorial.decor.GridSpacingItemDecoration
 import com.eebros.daggertutorial.di.ViewModelProviderFactory
-import com.eebros.daggertutorial.presentation.activity.SelectedCardActivity
 import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
 import com.eebros.daggertutorial.view.CustomProgressDialog
 import io.reactivex.rxkotlin.addTo
@@ -26,14 +24,15 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
-class MainFragment : BaseFragment(), MainFragmentAdapter.MainFragmentAdapterListener {
+class HomeFragment : BaseFragment(),
+    HomeFragmentAdapter.MainFragmentAdapterListener {
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
 
-    private lateinit var viewModel: MainFragmentViewModel
+    private lateinit var viewModel: HomeFragmentViewModel
 
-    lateinit var mainFragmentAdapter: MainFragmentAdapter
+    lateinit var mainFragmentAdapter: HomeFragmentAdapter
 
     private val allCards = arrayListOf<GetAllCardResponseModel>()
 
@@ -51,12 +50,12 @@ class MainFragment : BaseFragment(), MainFragmentAdapter.MainFragmentAdapterList
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         initView(view)
 
         //initialize view model with constructor
-        viewModel = ViewModelProvider(this, factory)[MainFragmentViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[HomeFragmentViewModel::class.java]
 
         val glm = GridLayoutManager(requireActivity(), 2)
         //llm.orientation = LinearLayoutManager.VERTICAL
@@ -71,7 +70,7 @@ class MainFragment : BaseFragment(), MainFragmentAdapter.MainFragmentAdapterList
         cardContainer.itemAnimator = DefaultItemAnimator()
 
         mainFragmentAdapter =
-            MainFragmentAdapter(
+            HomeFragmentAdapter(
                 requireContext(),
                 allCards,
                 {

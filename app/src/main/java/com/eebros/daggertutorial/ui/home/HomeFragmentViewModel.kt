@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial.presentation.fragment
+package com.eebros.daggertutorial.ui.home
 
 import com.eebros.daggertutorial.base.BaseViewModel
 import com.eebros.daggertutorial.base.BaseViewModelInputs
@@ -11,22 +11,22 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
-interface MainFragmentViewModelInputs: BaseViewModelInputs{
+interface HomeFragmentViewModelInputs: BaseViewModelInputs{
     fun getAllCards()
 }
 
-interface MainFragmentViewModelOutputs: BaseViewModelOutputs{
+interface HomeFragmentViewModelOutputs: BaseViewModelOutputs{
     fun accountsSuccess(): PublishSubject<ArrayList<GetAllCardResponseModel>>
     fun showProgress(): PublishSubject<Boolean>
 }
 
-class MainFragmentViewModel @Inject constructor(private val getAllCardUseCase: GetAllCardUseCase):
+class HomeFragmentViewModel @Inject constructor(private val getAllCardUseCase: GetAllCardUseCase):
     BaseViewModel(),
-    MainFragmentViewModelInputs,
-    MainFragmentViewModelOutputs {
+    HomeFragmentViewModelInputs,
+    HomeFragmentViewModelOutputs {
 
-    override val inputs: MainFragmentViewModelInputs = this
-    override val outputs: MainFragmentViewModelOutputs = this
+    override val inputs: HomeFragmentViewModelInputs = this
+    override val outputs: HomeFragmentViewModelOutputs = this
 
     private val accountsSuccess = PublishSubject.create<ArrayList<GetAllCardResponseModel>>()
 
