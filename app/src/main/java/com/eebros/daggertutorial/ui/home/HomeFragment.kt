@@ -137,7 +137,6 @@ class HomeFragment : BaseFragment(),
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
         searchView.maxWidth = Integer.MAX_VALUE
-        searchView.queryHint = "Search YU GI OH cards ..."
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
