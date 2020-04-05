@@ -18,7 +18,8 @@ class HomeFragmentAdapter(
     private val context: Context,
     private val getAllCards: ArrayList<GetAllCardResponseModel>,
     private val onCLickListener: (position: Int) -> Unit,
-    private val listener: MainFragmentAdapterListener
+    private val listener: MainFragmentAdapterListener,
+    private val isCardViewAsList: Boolean
 ) : RecyclerView.Adapter<HomeFragmentAdapter.MainViewHolder>(), Filterable {
 
     private var filteredCardList = getAllCards
@@ -28,7 +29,9 @@ class HomeFragmentAdapter(
     class MainViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(getAllCardResponseModel: GetAllCardResponseModel, context: Context, listener: MainFragmentAdapterListener, clickListeners: (position: Int) -> Unit){
             itemView.iconText.text = getAllCardResponseModel.name
-            Glide.with(context).load(getAllCardResponseModel.card_images[0].image_url).into(itemView.icon);
+            itemView.desc.text = getAllCardResponseModel.desc
+            Glide.with(context).load(getAllCardResponseModel.card_images[0].image_url).into(itemView.icon)
+            itemView.type.text = getAllCardResponseModel.type
             itemView.setOnClickListener {
                 listener.getCardInfo(getAllCardResponseModel)
                 clickListeners.invoke(adapterPosition) }
@@ -38,7 +41,7 @@ class HomeFragmentAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         return MainViewHolder(
             inflater.inflate(
-                R.layout.cards_list_view,
+                if(isCardViewAsList) R.layout.cards_list_view else R.layout.cards_grid_view,
                 parent,
                 false
             )

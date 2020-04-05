@@ -3,18 +3,18 @@ package com.eebros.daggertutorial
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.eebros.daggertutorial.base.BaseActivity
 import com.eebros.daggertutorial.di.ViewModelProviderFactory
+import com.eebros.daggertutorial.ui.dashboard.DashboardFragment
+import com.eebros.daggertutorial.ui.home.HomeFragment
+import com.eebros.daggertutorial.ui.notifications.NotificationsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(){
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
@@ -22,8 +22,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     lateinit var viewModel: MainActivityViewModel
 
     private var searchItem: MenuItem? = null
+    private var listView: MenuItem? = null
 
     private var searchShow = true
+    private var cardListShow = true
+
+    private var isCardList = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,34 +35,48 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         viewModel = ViewModelProvider(this, factory)[MainActivityViewModel::class.java]
 
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
-        val navController = findNavController(R.id.nav_host_fragment)
-
         setSupportActionBar(home_screen_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportActionBar?.title = getString(R.string.app_name)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, HomeFragment()).commit()
+
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        navView.setOnNavigationItemSelectedListener {
+            val transaction = supportFragmentManager.beginTransaction()
+            when (it.itemId) {
+                R.id.navigation_home -> {
+                    searchShow = true
+                    cardListShow = true
+                    transaction.replace(R.id.nav_host_fragment, HomeFragment()).commit()
+                }
+                R.id.navigation_dashboard -> {
+                    searchShow = false
+                    cardListShow = false
+                    transaction.replace(R.id.nav_host_fragment, DashboardFragment()).commit()
+                }
+                R.id.navigation_notifications -> {
+                    searchShow = false
+                    cardListShow = false
+                    transaction.replace(R.id.nav_host_fragment, NotificationsFragment()).commit()
+                }
+            }
+            true
+        }
+
 
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.getItem(0)?.isVisible = searchShow
+        menu?.getItem(1)?.isVisible = cardListShow
         return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
         searchItem = menu?.findItem(R.id.action_search)
+        listView = menu?.findItem(R.id.list_view)
         return true
     }
 
@@ -70,14 +88,5 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.navigation_home -> searchShow = true
-            R.id.navigation_dashboard -> searchShow = false
-            R.id.navigation_notifications -> searchShow = false
-        }
-        return true
     }
 }

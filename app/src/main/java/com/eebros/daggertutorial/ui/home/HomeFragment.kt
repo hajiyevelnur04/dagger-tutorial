@@ -7,11 +7,15 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.eebros.daggertutorial.R
 import com.eebros.daggertutorial.base.BaseFragment
@@ -39,6 +43,8 @@ class HomeFragment : BaseFragment(),
     lateinit var dialog: CustomProgressDialog
 
     lateinit var cardContainer: RecyclerView
+
+    private var isCarViewList = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +82,8 @@ class HomeFragment : BaseFragment(),
                 {
 
                 },
-                this
+                this,
+                isCarViewList
             )
         cardContainer.adapter = mainFragmentAdapter
 
@@ -130,6 +137,7 @@ class HomeFragment : BaseFragment(),
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
         searchView.maxWidth = Integer.MAX_VALUE
+        searchView.queryHint = "Search YU GI OH cards ..."
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -144,6 +152,35 @@ class HomeFragment : BaseFragment(),
                 return true
             }
         })
+
+
+        val cardListView = menu.findItem(R.id.list_view)
+        cardListView.setOnMenuItemClickListener {
+            var layoutManager: RecyclerView.LayoutManager = if (isCarViewList) {
+                cardListView.setIcon(R.drawable.ic_grid)
+                LinearLayoutManager(requireActivity())
+            } else {
+                cardListView.setIcon(R.drawable.ic_list)
+                GridLayoutManager(requireActivity(), 2)
+            }
+            isCarViewList = !isCarViewList
+            cardContainer.layoutManager = layoutManager
+            cardContainer.adapter = mainFragmentAdapter
+
+            mainFragmentAdapter =
+                HomeFragmentAdapter(
+                    requireContext(),
+                    allCards,
+                    {
+
+                    },
+                    this,
+                    isCarViewList
+                )
+            mainFragmentAdapter.notifyDataSetChanged()
+            true
+        }
+
     }
 
     override fun getCardInfo(getAllCardResponseModel: GetAllCardResponseModel) {
