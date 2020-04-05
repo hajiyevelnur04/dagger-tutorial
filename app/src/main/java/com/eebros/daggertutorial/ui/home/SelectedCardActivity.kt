@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial.presentation.activity
+package com.eebros.daggertutorial.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

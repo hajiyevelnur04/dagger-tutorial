@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.eebros.daggertutorial.R
-import com.eebros.daggertutorial.presentation.fragment.MainFragment
+import com.eebros.daggertutorial.ui.home.HomeFragment
 import com.eebros.daggertutorial.presentation.fragment.TestFragment
 
 private val TAB_TITLES = arrayOf(
@@ -14,7 +14,7 @@ private val TAB_TITLES = arrayOf(
 )
 
 private val TAB_FRAGMENTS = arrayOf(
-    MainFragment(),
+    HomeFragment(),
     TestFragment()
 )
 

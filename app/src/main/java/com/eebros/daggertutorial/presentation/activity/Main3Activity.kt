@@ -3,21 +3,20 @@ package com.eebros.daggertutorial.presentation.activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.eebros.daggertutorial.R
 import com.eebros.daggertutorial.base.BaseActivity
 import com.eebros.daggertutorial.di.ViewModelProviderFactory
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main3.*
 
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class Main3Activity : BaseActivity() {
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
 
-    lateinit var viewModel: MainActivityViewModel
+    lateinit var viewModel3: Main3ActivityViewModel
 
     private var searchItem: MenuItem? = null
 
@@ -25,9 +24,9 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main3)
 
-        viewModel = ViewModelProvider(this, factory)[MainActivityViewModel::class.java]
+        viewModel3 = ViewModelProvider(this, factory)[Main3ActivityViewModel::class.java]
 
         view_pager.adapter =
             MainSelectPagerAdapter(

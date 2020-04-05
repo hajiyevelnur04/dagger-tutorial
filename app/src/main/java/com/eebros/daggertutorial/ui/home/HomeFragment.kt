@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial.presentation.fragment
+package com.eebros.daggertutorial.ui.home
 
 import android.app.SearchManager
 import android.content.Context
@@ -7,18 +7,20 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.eebros.daggertutorial.R
 import com.eebros.daggertutorial.base.BaseFragment
 import com.eebros.daggertutorial.decor.GridSpacingItemDecoration
 import com.eebros.daggertutorial.di.ViewModelProviderFactory
-import com.eebros.daggertutorial.presentation.activity.SelectedCardActivity
 import com.eebros.daggertutorial.remote.data.response.GetAllCardResponseModel
 import com.eebros.daggertutorial.view.CustomProgressDialog
 import io.reactivex.rxkotlin.addTo
@@ -26,20 +28,23 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
-class MainFragment : BaseFragment() {
+class HomeFragment : BaseFragment(),
+    HomeFragmentAdapter.MainFragmentAdapterListener {
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
 
-    private lateinit var viewModel: MainFragmentViewModel
+    private lateinit var viewModel: HomeFragmentViewModel
 
-    lateinit var mainFragmentAdapter: MainFragmentAdapter
+    lateinit var mainFragmentAdapter: HomeFragmentAdapter
 
     private val allCards = arrayListOf<GetAllCardResponseModel>()
 
     lateinit var dialog: CustomProgressDialog
 
     lateinit var cardContainer: RecyclerView
+
+    private var isCarViewList = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +56,12 @@ class MainFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         initView(view)
 
         //initialize view model with constructor
-        viewModel = ViewModelProvider(this, factory)[MainFragmentViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[HomeFragmentViewModel::class.java]
 
         val glm = GridLayoutManager(requireActivity(), 2)
         //llm.orientation = LinearLayoutManager.VERTICAL
@@ -71,24 +76,15 @@ class MainFragment : BaseFragment() {
         cardContainer.itemAnimator = DefaultItemAnimator()
 
         mainFragmentAdapter =
-            MainFragmentAdapter(
+            HomeFragmentAdapter(
                 requireContext(),
-                allCards
-            ) {
-                var intent = Intent(requireActivity(), SelectedCardActivity::class.java)
-                intent.putExtra("name", allCards[it].name)
-                intent.putExtra("desc", allCards[it].desc)
-                intent.putExtra("name", allCards[it].type)
-                intent.putExtra("image",allCards[it].card_images[0].image_url)
-                intent.putExtra("race", allCards[it].race)
-                intent.putExtra("archetype", allCards[it].archetype)
-                intent.putExtra("id", allCards[it].id)
-                intent.putExtra("setName", allCards[it].card_sets[0].set_name)
-                intent.putExtra("setCode", allCards[it].card_sets[0].set_code)
-                intent.putExtra("setPrice", allCards[it].card_sets[0].set_price)
-                startActivity(intent)
+                allCards,
+                {
 
-            }
+                },
+                this,
+                isCarViewList
+            )
         cardContainer.adapter = mainFragmentAdapter
 
         //this helps to invoke and send data to and from viewModel
@@ -141,6 +137,7 @@ class MainFragment : BaseFragment() {
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
         searchView.maxWidth = Integer.MAX_VALUE
+        searchView.queryHint = "Search YU GI OH cards ..."
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -155,5 +152,49 @@ class MainFragment : BaseFragment() {
                 return true
             }
         })
+
+
+        val cardListView = menu.findItem(R.id.list_view)
+        cardListView.setOnMenuItemClickListener {
+            var layoutManager: RecyclerView.LayoutManager = if (isCarViewList) {
+                cardListView.setIcon(R.drawable.ic_grid)
+                LinearLayoutManager(requireActivity())
+            } else {
+                cardListView.setIcon(R.drawable.ic_list)
+                GridLayoutManager(requireActivity(), 2)
+            }
+            isCarViewList = !isCarViewList
+            cardContainer.layoutManager = layoutManager
+            cardContainer.adapter = mainFragmentAdapter
+
+            mainFragmentAdapter =
+                HomeFragmentAdapter(
+                    requireContext(),
+                    allCards,
+                    {
+
+                    },
+                    this,
+                    isCarViewList
+                )
+            mainFragmentAdapter.notifyDataSetChanged()
+            true
+        }
+
+    }
+
+    override fun getCardInfo(getAllCardResponseModel: GetAllCardResponseModel) {
+        var intent = Intent(requireActivity(), SelectedCardActivity::class.java)
+        intent.putExtra("name", getAllCardResponseModel.name)
+        intent.putExtra("desc", getAllCardResponseModel.desc)
+        intent.putExtra("name", getAllCardResponseModel.type)
+        intent.putExtra("image",getAllCardResponseModel.card_images[0].image_url)
+        intent.putExtra("race", getAllCardResponseModel.race)
+        intent.putExtra("archetype", getAllCardResponseModel.archetype)
+        intent.putExtra("id", getAllCardResponseModel.id)
+        intent.putExtra("setName", getAllCardResponseModel.card_sets[0].set_name)
+        intent.putExtra("setCode", getAllCardResponseModel.card_sets[0].set_code)
+        intent.putExtra("setPrice", getAllCardResponseModel.card_sets[0].set_price)
+        startActivity(intent)
     }
 }

@@ -1,4 +1,4 @@
-package com.eebros.daggertutorial.presentation.activity
+package com.eebros.daggertutorial
 
 import android.content.Context
 import com.eebros.daggertutorial.base.BaseViewModel
